@@ -1,18 +1,21 @@
 <?php
+
+include_once "config.php";
+include_once "entidades/usuario.php";
 //Iniciamos la session
 session_start();
 
-//En el dia de mañana la clave encriptada vendrá de una base de datos
-$claveEncriptada = password_hash("admin123", PASSWORD_DEFAULT);
-
 if($_POST){
-	//Comprobamos que el usuario sea admin y la clave sea admin123
-	$usuario = trim($_POST["txtUsuario"]); //trim elimina espacios de los laterales
-	$clave = trim($_POST["txtClave"]);
 
-	//Si es correcto creamos una variable de session llamada nombre y tenga el valor "Ana Valle"
-	if($usuario == "admin" &&  password_verify($clave, $claveEncriptada)){
-		$_SESSION["nombre"] = "Cesar Acacio Di Leonardo";
+	$usuario = trim($_POST["txtUsuario"]); //trim elimina espacios de los laterales
+  $clave = trim($_POST["txtClave"]);
+  
+  $entidadUsuario = new Usuario(); 
+  $entidadUsuario->obtenerPorUsuario($usuario);
+  $entidadUsuario->encriptarClave($clave);
+
+if($entidadUsuario->verificarClave($clave, $entidadUsuario->clave)){ 
+  $_SESSION["nombre"] =  $entidadUsuario->nombre;
 
 		//Redireccionamos a la home
 		header("location:index.php");
@@ -21,6 +24,7 @@ if($_POST){
 		$msg = "Usuario o clave incorrecto";
 	}
 }
+
 
 ?>
 <!DOCTYPE html>
@@ -78,10 +82,10 @@ if($_POST){
 					</div>
 				  <?php endif; ?>
                     <div class="form-group">
-                      <input type="text" class="form-control form-control-user" id="txtUsuario" name="txtUsuario" aria-describedby="emailHelp" placeholder="Usuario" value="admin">
+                      <input type="text" class="form-control form-control-user" id="txtUsuario" name="txtUsuario" aria-describedby="emailHelp" placeholder="Usuario" value="">
                     </div>
                     <div class="form-group">
-                      <input type="password" class="form-control form-control-user" id="txtClave" name="txtClave" placeholder="Clave" value="admin123">
+                      <input type="password" class="form-control form-control-user" id="txtClave" name="txtClave" placeholder="Clave" value="">
                     </div>
                     <div class="form-group">
                       <div class="custom-control custom-checkbox small">
