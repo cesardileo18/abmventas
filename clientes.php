@@ -20,11 +20,7 @@ $pg = "Listado de clientes";
 
 $cliente = new Cliente();
 $aClientes = $cliente->obtenerTodos();
-
-
 ?>
-
-
 <!DOCTYPE html>
 <html lang="es">
 

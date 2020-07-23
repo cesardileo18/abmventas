@@ -1,21 +1,18 @@
 <?php
-
-include_once "config.php";
-include_once "entidades/usuario.php";
 //Iniciamos la session
 session_start();
 
+//En el dia de mañana la clave encriptada vendrá de una base de datos
+$claveEncriptada = password_hash("admin123", PASSWORD_DEFAULT);
+
 if($_POST){
-
+	//Comprobamos que el usuario sea admin y la clave sea admin123
 	$usuario = trim($_POST["txtUsuario"]); //trim elimina espacios de los laterales
-  $clave = trim($_POST["txtClave"]);
-  
-  $entidadUsuario = new Usuario(); 
-  $entidadUsuario->obtenerPorUsuario($usuario);
-  $entidadUsuario->encriptarClave($clave);
+	$clave = trim($_POST["txtClave"]);
 
-if($entidadUsuario->verificarClave($clave, $entidadUsuario->clave)){ 
-  $_SESSION["nombre"] =  $entidadUsuario->nombre;
+	//Si es correcto creamos una variable de session llamada nombre y tenga el valor "Ana Valle"
+	if($usuario == "admin" &&  password_verify($clave, $claveEncriptada)){
+		$_SESSION["nombre"] = "Cesar Acacio Di Leonardo";
 
 		//Redireccionamos a la home
 		header("location:index.php");
@@ -24,7 +21,6 @@ if($entidadUsuario->verificarClave($clave, $entidadUsuario->clave)){
 		$msg = "Usuario o clave incorrecto";
 	}
 }
-
 
 ?>
 <!DOCTYPE html>
