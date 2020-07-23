@@ -37,15 +37,15 @@ if ($_POST) {
     $cliente->eliminar();
   }
 }
-if (isset($_GET["id"]) && $_GET["id"] > 0) {
-  $cliente->obtenerPorId();
-}
-if(isset($_GET["do"]) && $_GET["do"] == "buscarLocalidad"){
+
+if(isset($_GET["do"]) && $_GET["do"] == "buscarLocalidad" && $_GET["id"] && $_GET["id"] > 0){
   $idProvincia = $_GET["id"];
   $localidad = new Localidad();
   $aLocalidad = $localidad->obtenerPorProvincia($idProvincia);
   echo json_encode($aLocalidad);
   exit;
+} elseif (isset($_GET["id"]) && $_GET["id"] > 0){
+  $cliente->obtenerPorId();
 }
 
 if(isset($_GET["do"]) && $_GET["do"] == "cargarGrilla"){
