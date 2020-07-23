@@ -16,10 +16,12 @@ if($_POST){
 
 include_once "config.php";
 include_once "entidades/cliente.php";
+include_once "entidades/domicilio.php";
 $pg = "Listado de clientes";
 
 $cliente = new Cliente();
 $aClientes = $cliente->obtenerTodos();
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -59,12 +61,13 @@ $aClientes = $cliente->obtenerTodos();
             <tr>
                 <th>CUIT</th>
                 <th>Nombre</th>
-                <th>Fecha nac.</th>
+                <th>Fecha Nac.</th>
                 <th>Teléfono</th>
                 <th>Correo</th>
                 <th>Acciones</th>
             </tr>
             <?php foreach ($aClientes as $cliente): ?>
+        
               <tr>
                   <td><a href="cliente-formulario.php?id=<?php echo $cliente->idcliente; ?>"><?php echo $cliente->cuit; ?></a></td>
                   <td><?php echo $cliente->nombre; ?></td>
