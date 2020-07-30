@@ -64,6 +64,7 @@ $aClientes = $cliente->obtenerTodos();
                 <th>Fecha Nac.</th>
                 <th>Teléfono</th>
                 <th>Correo</th>
+                
                 <th>Acciones</th>
             </tr>
             <?php foreach ($aClientes as $cliente): ?>
