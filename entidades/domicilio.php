@@ -18,7 +18,8 @@ class Domicilio{
     }
 
     public function insertar(){
-        $sql = "INSERT INTO domicilios (
+        $mysql = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE);
+        $mysql->query("INSERT INTO domicilios (
             fk_idcliente, 
             fk_tipo, 
             fk_idlocalidad, 
@@ -26,10 +27,7 @@ class Domicilio{
             $this->fk_idcliente, 
             $this->fk_tipo, 
             $this->fk_idlocalidad, 
-            '$this->domicilio')";
-           
-        $mysql = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE);
-        $mysql->query($sql);
+            '$this->domicilio')");
     }
 
     public function eliminarPorCliente($idCliente){
@@ -40,6 +38,7 @@ class Domicilio{
         }
         $mysqli->close();
     }
+
      public function obtenerFiltrado($idCliente){
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE);
         $request = $_REQUEST;
@@ -72,6 +71,7 @@ class Domicilio{
             $sql.=" OR C.nombre LIKE '%" . $request['search']['value'] . "%' ";
             $sql.=" OR A.domicilio LIKE '%" . $request['search']['value'] . "%' )";
         }
+        if(isset($request['order']))
         $sql.=" ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir'];
         $resultado = $mysqli->query($sql);
         $lstRetorno = array();
@@ -87,9 +87,13 @@ class Domicilio{
             $domicilio->domicilio = $fila["domicilio"];
             $lstRetorno[] = $domicilio;
         }
+
         return $lstRetorno;
     }
 
+
+
 }
+
 
 ?>

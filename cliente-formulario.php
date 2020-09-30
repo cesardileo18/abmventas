@@ -40,7 +40,7 @@ if($_POST){
             for($i=0; $i < count($_POST["txtTipo"]); $i++){
                 $domicilio->fk_idcliente = $cliente->idcliente; 
                 $domicilio->fk_tipo = $_POST["txtTipo"][$i];
-                $domicilio->fk_idlocalidad =  $_POST["txtLocalidad"][$i];
+                $domicilio->fk_idlocalidad =  $_POST["lstLocalidad"][$i];
                 $domicilio->domicilio = $_POST["txtDomicilio"][$i];
                 $domicilio->insertar();
             }
@@ -133,6 +133,7 @@ $aProvincias = $provincia->obtenerTodos();
       <button type="submit" class="btn btn-danger" id="btnBorrar" name="btnBorrar">Borrar</button>
     </div>
   </div>
+<form action="" method="POST">
   <div class="row">
    <div class="col-6 form-group">
       <label for="txtNombre">Nombre:</label>
@@ -178,6 +179,7 @@ $aProvincias = $provincia->obtenerTodos();
                  </div>
             </div>          
         </div>
+ </form>
     </div>
 <div class="modal fade" id="modalDomicilio" tabindex="-1" role="dialog" aria-labelledby="modalDomicilioLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -282,8 +284,8 @@ function fBuscarLocalidad(){
             var grilla = $('#grilla').DataTable();
             grilla.row.add([
                 $("#lstTipo option:selected").text() + "<input type='hidden' name='txtTipo[]' value='"+ $("#lstTipo option:selected").val() +"'>",
-                $("#lstProvincia option:selected").text() + "<input type='hidden' name='txtProvincia[]' value='"+ $("#lstProvincia option:selected").val() +"'>",
-                $("#lstLocalidad option:selected").text() + "<input type='hidden' name='txtLocalidad[]' value='"+ $("#lstLocalidad option:selected").val() +"'>",
+                $("#lstProvincia option:selected").text() + "<input type='hidden' name='lstProvincia[]' value='"+ $("#lstProvincia option:selected").val() +"'>",
+                $("#lstLocalidad option:selected").text() + "<input type='hidden' name='lstLocalidad[]' value='"+ $("#lstLocalidad option:selected").val() +"'>",
                 $("#txtDireccion").val() + "<input type='hidden' name='txtDomicilio[]' value='"+$("#txtDireccion").val()+"'>"
             ]).draw();
             $('#modalDomicilio').modal('toggle');
