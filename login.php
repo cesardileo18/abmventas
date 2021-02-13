@@ -5,21 +5,21 @@ session_start();
 //En el dia de mañana la clave encriptada vendrá de una base de datos
 $claveEncriptada = password_hash("admin123", PASSWORD_DEFAULT);
 
-if($_POST){
-	//Comprobamos que el usuario sea admin y la clave sea admin123
-	$usuario = trim($_POST["txtUsuario"]); //trim elimina espacios de los laterales
-	$clave = trim($_POST["txtClave"]);
+if ($_POST) {
+  //Comprobamos que el usuario sea admin y la clave sea admin123
+  $usuario = trim($_POST["txtUsuario"]); //trim elimina espacios de los laterales
+  $clave = trim($_POST["txtClave"]);
 
-	//Si es correcto creamos una variable de session llamada nombre y tenga el valor "Ana Valle"
-	if($usuario == "admin" &&  password_verify($clave, $claveEncriptada)){
-		$_SESSION["nombre"] = "Cesar Acacio Di Leonardo";
+  //Si es correcto creamos una variable de session llamada nombre y tenga el valor "Ana Valle"
+  if ($usuario == "admin" &&  password_verify($clave, $claveEncriptada)) {
+    $_SESSION["nombre"] = "Cesar Acacio Di Leonardo";
 
-		//Redireccionamos a la home
-		header("location:index.php");
-	} else {
-		//Si no es correcto la clave o el usuario mostrar en pantalla "Usuario o clave incorrecto"
-		$msg = "Usuario o clave incorrecto";
-	}
+    //Redireccionamos a la home
+    header("location:index.php");
+  } else {
+    //Si no es correcto la clave o el usuario mostrar en pantalla "Usuario o clave incorrecto"
+    $msg = "Usuario o clave incorrecto";
+  }
 }
 
 ?>
@@ -34,7 +34,7 @@ if($_POST){
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  
+
 
   <title>Inicio de sesión</title>
 
@@ -44,11 +44,11 @@ if($_POST){
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/fontawesome/css/all.min.css">
   <link rel="stylesheet" href="css/fontawesome/css/fontawesome.min.css">
-  
+
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
- 
+
 
 </head>
 
@@ -65,18 +65,17 @@ if($_POST){
           <div class="card-body p-0">
             <!-- Nested Row within Card Body -->
             <div class="row">
-              <div class="col-lg-6"> <img src="img/abm-account-based-marketing.jpg"  width="500" height="500" ></div>
-              <div class="col-lg-6">
+              <div class="col-lg-12">
                 <div class="p-5">
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">Bienvenidos</h1>
                   </div>
                   <form action="" method="POST" class="user">
-				  <?php if(isset($msg)): ?>
-				  	<div class="alert alert-danger" role="alert">
-						<?php echo $msg; ?>
-					</div>
-				  <?php endif; ?>
+                    <?php if (isset($msg)) : ?>
+                      <div class="alert alert-danger" role="alert">
+                        <?php echo $msg; ?>
+                      </div>
+                    <?php endif; ?>
                     <div class="form-group">
                       <input type="text" class="form-control form-control-user" id="txtUsuario" name="txtUsuario" aria-describedby="emailHelp" placeholder="Usuario" value="">
                     </div>
