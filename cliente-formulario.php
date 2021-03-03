@@ -7,6 +7,7 @@ if (!isset($_SESSION["nombre"])) {
   header("location:login.php");
 }
 
+
 if ($_POST) {
   if (isset($_POST["btnCerrar"])) { /* Analizamos si es la accion del boton cerrar */
     session_destroy();
@@ -35,14 +36,12 @@ if ($_POST) {
       $cliente->insertar();
     }
     if (isset($_POST["txtTipo"])) {
-      $domicilio = new Domicilio();
-      $domicilio->eliminarPorCliente($cliente->idcliente);
       for ($i = 0; $i < count($_POST["txtTipo"]); $i++) {
+        $domicilio = new Domicilio();
         $domicilio->fk_idcliente = $cliente->idcliente;
         $domicilio->fk_tipo = $_POST["txtTipo"][$i];
         $domicilio->fk_idlocalidad =  $_POST["lstLocalidad"][$i];
         $domicilio->domicilio = $_POST["txtDomicilio"][$i];
-        $domicilio->insertar();
       }
     }
   } else if (isset($_POST["btnBorrar"])) {
