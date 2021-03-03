@@ -12,6 +12,14 @@ class Provincia{
         $this->$atributo = $valor;
         return $this;
     }
+    public function insertar(){
+        $mysql = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE);
+        $mysql->query("INSERT INTO provincias (
+            idprovincia,
+            nombre) VALUE(
+            $this->idprovincia,
+            '$this->nombre')");
+    }
 
     public function obtenerTodos(){
         $aProvincias = null;
