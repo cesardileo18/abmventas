@@ -42,6 +42,7 @@ if ($_POST) {
         $domicilio->fk_tipo = $_POST["txtTipo"][$i];
         $domicilio->fk_idlocalidad =  $_POST["lstLocalidad"][$i];
         $domicilio->domicilio = $_POST["txtDomicilio"][$i];
+        $domicilio->eliminarPorCliente($idCliente);
       }
     }
   } else if (isset($_POST["btnBorrar"])) {
@@ -123,62 +124,69 @@ $aProvincias = $provincia->obtenerTodos();
 <div class="container-fluid">
 
   <!-- Page Heading -->
-  <h1 class="h3 mb-4 text-gray-800 col-12">Cliente</h1>
-  <div class="row">
-    <div class="col-12 mb-3">
-      <a href="clientes.php" class="btn btn-primary mr-2 mb-2 col-xs-12 col-sm-2 col-lg-1">Listado</a>
-      <a href="cliente-formulario.php" class="btn btn-primary mr-2 mb-2 col-xs-12 col-sm-2 col-lg-1 ">Nuevo</a>
-      <button type="submit" class="btn btn-success mr-2 mb-2 col-xs-12 col-sm-2 col-lg-1 " id="btnGuardar" name="btnGuardar">Guardar</button>
-      <button type="submit" class="btn btn-danger mb-2 col-xs-12 col-sm-2 col-lg-1" id="btnBorrar" name="btnBorrar">Borrar</button>
-    </div>
-  </div>
-  <form action="" method="POST">
-    <div class="row">
-      <div class="col-12 col-md-6 form-group">
-        <label for="txtNombre">Nombre:</label>
-        <input type="text" required class="form-control" name="txtNombre" id="txtNombre" value="<?php echo $cliente->nombre ?>">
-      </div>
-      <div class="col-12 col-md-6 form-group">
-        <label for="txtCuit">CUIT:</label>
-        <input type="number" required class="form-control" name="txtCuit" id="txtCuit" value="<?php echo $cliente->cuit ?>" maxlength="11">
-      </div>
-      <div class="col-12 col-md-6 form-group">
-        <label for="txtFechaNac">Fecha de nacimiento:</label>
-        <input type="date" class="form-control" name="txtFechaNac" id="txtFechaNac" value="<?php echo $cliente->fecha_nac ?>">
-      </div>
-      <div class="col-12 col-md-6 form-group">
-        <label for="txtTelefono">Teléfono:</label>
-        <input type="number" class="form-control" name="txtTelefono" id="txtTelefono" value="<?php echo $cliente->telefono ?>">
-      </div>
-      <div class="col-12 col-md-6 form-group">
-        <label for="txtCorreo">Correo:</label>
-        <input type="" class="form-control" name="txtCorreo" id="txtCorreo" required value="<?php echo $cliente->correo ?>">
-      </div>
+  <form action="" method="POST" enctype="multipart/form-data">
+    <div class="text-left">
+      <h2>Clientes</h2>
     </div>
     <div class="row">
-      <div class="col-12">
-        <div class="card mb-3">
-          <div class="card-header">
-            <i class="fa fa-table"></i> Domicilios
-            <div class="pull-right">
+      <div class="col-12 my-2">
+        <a href="cliente-list.php" class="btn btn-primary mx-1">Listado</a>
+        <a href="cliente-form.php" class="btn btn-primary mx-1">Nuevo</a>
+        <button type="submit" name="btnGuardar" id="btnGuardar" class="btn btn-success mx-1">Guardar</button>
+        <button type="submit" name="btnBorrar" id="btnBorrar" class="btn btn-danger ">Borrar</button>
+      </div>
+
+      <div class="col-6 col-md-6  form-group">
+        <label for="txtNombre">Nombre:</label> <br>
+        <input type="text" class="form-control" name="txtNombre" id="txtNombre" required="" value="<?php echo  $cliente->nombre; ?>">
+      </div>
+
+      <div class="col-6 col-md-6">
+        <label for="txtCuit">CUIT:</label> <br>
+        <input type="text" class="form-control" name="txtCuit" id="txtCuit" required="" value="<?php echo  $cliente->cuit; ?>">
+      </div>
+      <div class="col-6 col-md-6">
+        <label for="txtCorreo">Email:</label> <br>
+        <input type="email" class="form-control" name="txtCorreo" id="txtCorreo" required="" value="<?php echo  $cliente->correo; ?>">
+      </div>
+      <div class="col-6 col-md-6">
+        <label for="txtTelefono">Telefono:</label> <br>
+        <input type="text" class="form-control" name="txtTelefono" id="txtTelefono" required="" value="<?php echo  $cliente->telefono; ?>">
+      </div>
+      <div class="col-6 col-md-6">
+        <label for="txtFechaNac">Fecha de Nacimiento:</label> <br>
+        <input type="date" class="form-control" name="txtFechaNac" id="txtFechaNac" required="" value="<?php echo  $cliente->fecha_nac; ?>">
+      </div>
+    </div>
+  </form>
+  <div class="row my-2">
+    <div class="col-12">
+      <div class="card mb-3">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-6 text-left">
+              <i class="fa fa-table"></i> Domicilios
+            </div>
+            <div class="col-6 text-right">
               <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalDomicilio">Agregar</button>
             </div>
           </div>
-          <div class="panel-body">
-            <table id="grilla" class="display" style="width:98%">
-              <thead>
-                <tr>
-                  <th>Tipo</th>
-                  <th>Provincia</th>
-                  <th>Localidad</th>
-                  <th>Dirección</th>
-                </tr>
-              </thead>
-            </table>
-          </div>
+        </div>
+        <div class="panel-body p-2">
+          <table id="grilla" class="display" style="width:98%">
+            <thead>
+              <tr>
+                <th>Tipo</th>
+                <th>Provincia</th>
+                <th>Localidad</th>
+                <th>Dirección</th>
+              </tr>
+            </thead>
+          </table>
         </div>
       </div>
-  </form>
+    </div>
+  </div>
 </div>
 <div class="modal fade" id="modalDomicilio" tabindex="-1" role="dialog" aria-labelledby="modalDomicilioLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -189,52 +197,50 @@ $aProvincias = $provincia->obtenerTodos();
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-12 form-group">
-            <label for="lstTipo">Tipo:</label>
-            <select name="lstTipo" id="lstTipo" class="form-control">
-              <option value="" disabled selected>Seleccionar</option>
-              <option value="1">Personal</option>
-              <option value="2">Laboral</option>
-              <option value="3">Comercial</option>
-            </select>
+      <form action="" method="post">
+        <div>
+          <label for="lstTipo">Tipo de domicilio: </label>
+          <select name="lstTipo" id="lstTipo" required class="form-control">
+            <option value="" disabled selected>Seleccionar</option>
+            <option value="1">Personal</option>
+            <option value="2">Laboral</option>
+            <option value="3">Comercial</option>
+          </select>
+        </div>
+        <div>
+          <div class="row">
+            <div class="col-12 form-group">
+              <label for="lstProvincia">Provincia:</label>
+              <select name="lstProvincia" id="lstProvincia" onchange="fBuscarLocalidad();" class="form-control">
+                <option value="" disabled selected>Seleccionar</option>
+                <?php foreach ($aProvincias as $prov) : ?>
+                  <option value="<?php echo $prov->idprovincia; ?>"><?php echo $prov->nombre; ?></option>
+                <?php endforeach; ?>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 form-group">
+              <label for="lstLocalidad">Localidad:</label>
+              <select name="lstLocalidad" id="lstLocalidad" class="form-control">
+                <option value="" disabled selected>Seleccionar</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 form-group">
+              <label for="txtDireccion">Dirección:</label>
+              <input type="text" name="txtDireccion" id="txtDireccion" class="form-control">
+            </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-12 form-group">
-            <label for="lstProvincia">Provincia:</label>
-            <select name="lstProvincia" id="lstProvincia" onchange="fBuscarLocalidad();" class="form-control">
-              <option value="" disabled selected>Seleccionar</option>
-              <?php foreach ($aProvincias as $prov) : ?>
-                <option value="<?php echo $prov->idprovincia; ?>"><?php echo $prov->nombre; ?></option>
-              <?php endforeach; ?>
-            </select>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12 form-group">
-            <label for="lstLocalidad">Localidad:</label>
-            <select name="lstLocalidad" id="lstLocalidad" class="form-control">
-              <option value="" disabled selected>Seleccionar</option>
-            </select>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12 form-group">
-            <label for="txtDireccion">Dirección:</label>
-            <input type="text" name="" id="txtDireccion" class="form-control">
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" onclick="fAgregarDomicilio()">Agregar</button>
-      </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-primary" onclick="fAgregarDomicilio()">Agregar</button>
+      </form>
     </div>
   </div>
 </div>
-
 <script>
   window.onload = function() {}
   var idCliente = '<?php echo isset($cliente) && $cliente->idcliente > 0 ? $cliente->idcliente : 0 ?>';
