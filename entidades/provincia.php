@@ -13,12 +13,22 @@ class Provincia{
         return $this;
     }
     public function insertar(){
-        $mysql = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE);
-        $mysql->query("INSERT INTO provincias (
-            idprovincia,
-            nombre) VALUE(
-            $this->idprovincia,
-            '$this->nombre')");
+        //Instancia la clase mysqli con el constructor parametrizado
+        $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE);
+        //Arma la query
+        $sql = "INSERT INTO provincias (
+                    nombre
+                ) VALUES (
+                    '" . $this->nombre ."'
+                );";
+        //Ejecuta la query
+        if (!$mysqli->query($sql)) {
+            printf("Error en query: %s\n", $mysqli->error . " " . $sql);
+        }
+        //Obtiene el id generado por la inserción
+        $this->idprovincia = $mysqli->insert_id;
+        //Cierra la conexión
+        $mysqli->close();
     }
 
     public function obtenerTodos(){

@@ -16,20 +16,29 @@ class Domicilio{
         $this->$atributo = $valor;
         return $this;
     }
-
     public function insertar(){
-        $mysql = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE);
-        $mysql->query("INSERT INTO domicilios (
-            iddomicilio,
-            fk_idcliente, 
-            fk_tipo, 
-            fk_idlocalidad, 
-            domicilio) VALUE(
-            $this->iddomicilio,
-            $this->fk_idcliente, 
-            $this->fk_tipo, 
-            $this->fk_idlocalidad, 
-            '$this->domicilio')");
+        //Instancia la clase mysqli con el constructor parametrizado
+        $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE);
+        //Arma la query
+        $sql = "INSERT INTO domicilios (
+                    fk_idcliente, 
+                    fk_idlocalidad, 
+                    domicilio, 
+                    fk_tipo
+                ) VALUES (
+                    '" . $this->fk_idcliente ."', 
+                    '" . $this->fk_idlocalidad ."', 
+                    '" . $this->domicilio ."', 
+                    '" . $this->fk_tipo ."'
+                );";
+        //Ejecuta la query
+        if (!$mysqli->query($sql)) {
+            printf("Error en query: %s\n", $mysqli->error . " " . $sql);
+        }
+        //Obtiene el id generado por la inserción
+        $this->iddomicilio = $mysqli->insert_id;
+        //Cierra la conexión
+        $mysqli->close();
     }
 
     public function eliminarPorCliente($idCliente){

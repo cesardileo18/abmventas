@@ -15,18 +15,27 @@ class Localidad{
         return $this;
     }
     public function insertar(){
-        $mysql = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE);
-        $mysql->query("INSERT INTO localidades (
-            idlocalidad,
-            nombre, 
-            fk_idprovincia, 
-            cod_postal) VALUE(
-            $this->idlocalidad,
-            $this->nombre, 
-            $this->fk_idprovincia, 
-            '$this->cod_postal')");
+        //Instancia la clase mysqli con el constructor parametrizado
+        $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE);
+        //Arma la query
+        $sql = "INSERT INTO localidades (
+                    nombre, 
+                    fk_idprovincia, 
+                    cod_postal
+                ) VALUES (
+                    '" . $this->nombre ."', 
+                    '" . $this->fk_idprovincia ."', 
+                    '" . $this->cod_postal ."'
+                );";
+        //Ejecuta la query
+        if (!$mysqli->query($sql)) {
+            printf("Error en query: %s\n", $mysqli->error . " " . $sql);
+        }
+        //Obtiene el id generado por la inserción
+        $this->idlocalidad = $mysqli->insert_id;
+        //Cierra la conexión
+        $mysqli->close();
     }
-
     public function obtenerPorProvincia($idProvincia){
         $aLocalidades = null;
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE);
