@@ -37,8 +37,8 @@ if ($_POST) {
       //Es nuevo
       $cliente->insertar();
     }
-    if (isset($_POST["lstTipo"])) {
-      for ($i = 0; $i < count($_POST["lstTipo"]); $i++) {
+    if (isset($_POST["txtTipo"])) {
+      for ($i = 0; $i < count($_POST["txtTipo"]); $i++) {
         $domicilio = new Domicilio();
         $domicilio->fk_idcliente = $cliente->idcliente;
         $domicilio->fk_tipo = $_POST["lstTipo"][$i];
