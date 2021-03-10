@@ -49,7 +49,6 @@ class Domicilio{
         }
         $mysqli->close();
     }
-
      public function obtenerFiltrado($idCliente){
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE);
         $request = $_REQUEST;
