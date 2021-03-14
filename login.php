@@ -3,7 +3,7 @@
 session_start();
 
 //En el dia de mañana la clave encriptada vendrá de una base de datos
-$claveEncriptada = password_hash("admin123", PASSWORD_DEFAULT);
+$claveEncriptada = password_hash("", PASSWORD_DEFAULT);
 
 if ($_POST) {
   //Comprobamos que el usuario sea admin y la clave sea admin123
@@ -11,8 +11,8 @@ if ($_POST) {
   $clave = trim($_POST["txtClave"]);
 
   //Si es correcto creamos una variable de session llamada nombre y tenga el valor "Ana Valle"
-  if ($usuario == "admin" &&  password_verify($clave, $claveEncriptada)) {
-    $_SESSION["nombre"] = "Cesar Acacio Di Leonardo";
+  if ($usuario == "" &&  password_verify($clave, $claveEncriptada)) {
+    $_SESSION["nombre"] = "";
 
     //Redireccionamos a la home
     header("location:index.php");
