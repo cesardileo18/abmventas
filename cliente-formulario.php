@@ -146,7 +146,7 @@
         </div>
         <div class="col-12 col-md-6 form-group">
           <label for="txtCuit">CUIT:</label>
-          <input type="number" required class="form-control" name="txtCuit" id="txtCuit" value="<?php echo $cliente->cuit ?>" maxlength="11">
+          <input type="number" required class="form-control" name="txtCuit" id="txtCuit" value="<?php echo $cliente->cuit ?>" maxlength="10">
         </div>
         <div class="col-12 col-md-6 form-group">
           <label for="txtFechaNac">Fecha de nacimiento:</label>
