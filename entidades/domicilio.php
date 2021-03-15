@@ -40,6 +40,22 @@ class Domicilio{
         //Cierra la conexión
         $mysqli->close();
     }
+    
+    public function actualizar(){
+
+        $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE);
+        $sql = "UPDATE domicilios SET
+                fk_idcliente = '".$this->fk_idcliente."',
+                fk_idlocalidad = '".$this->fk_idlocalidad."',
+                domicilio = '".$this->domicilio."',
+                fk_tipo =  '".$this->fk_tipo."'
+                WHERE iddomicilio = " . $this->iddomicilio;
+          
+        if (!$mysqli->query($sql)) {
+            printf("Error en query: %s\n", $mysqli->error . " " . $sql);
+        }
+        $mysqli->close();
+    }
 
     public function eliminarPorCliente($idCliente){
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE);

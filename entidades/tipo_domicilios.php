@@ -17,8 +17,10 @@ class tipoDomicilio{
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE);
         //Arma la query
         $sql = "INSERT INTO tipo_domicilios ( 
+                    tipo,
                     nombre
                 ) VALUES (
+                    '" . $this->tipo ."', 
                     '" . $this->nombre ."'
                 );";
         //Ejecuta la query
@@ -30,6 +32,20 @@ class tipoDomicilio{
         //Cierra la conexión
         $mysqli->close();
     } 
+
+    public function actualizar(){
+
+        $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE);
+        $sql = "UPDATE tipo_domicilios  SET
+                tipo = '".$this->tipo."',
+                nombre =  '".$this->nombre."'
+                WHERE idtipo = " . $this->idtipo;
+          
+        if (!$mysqli->query($sql)) {
+            printf("Error en query: %s\n", $mysqli->error . " " . $sql);
+        }
+        $mysqli->close();
+    }
 
 }
 

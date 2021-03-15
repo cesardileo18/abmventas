@@ -198,8 +198,8 @@
           <div class="modal-body">
             <div class="row">
               <div class="col-12 form-group">
-                <label for="txtTipo">Tipo:</label>
-                <select name="txtTipo" id="lstTipo" class="form-control">
+                <label for="lstTipo">Tipo:</label>
+                <select name="lstTipo" id="lstTipo" class="form-control">
                   <option value="" disabled selected>Seleccionar</option>
                   <option value="1">Personal</option>
                   <option value="2">Laboral</option>
@@ -241,11 +241,6 @@
       </div>
     </div>
   </div>
-  <!-- /.container-fluid -->
-
-  </div>
-  <!-- End of Main Content -->
-
   <!-- Footer -->
   <footer class="sticky-footer bg-white">
     <div class="container my-auto">
