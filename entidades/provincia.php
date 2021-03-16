@@ -30,19 +30,6 @@ class Provincia{
         //Cierra la conexión
         $mysqli->close();
     }
-    public function actualizar(){
-
-        $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE);
-        $sql = "UPDATE provincias  SET
-                nombre =  '".$this->nombre."'
-                WHERE idprovincia = " . $this->idprovincia;
-          
-        if (!$mysqli->query($sql)) {
-            printf("Error en query: %s\n", $mysqli->error . " " . $sql);
-        }
-        $mysqli->close();
-    }
-
 
     public function obtenerTodos(){
         $aProvincias = null;

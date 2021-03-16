@@ -36,21 +36,6 @@ class Localidad{
         //Cierra la conexión
         $mysqli->close();
     }
-    public function actualizar(){
-
-        $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE);
-        $sql = "UPDATE localidades SET
-                nombre = '".$this->nombre."',
-                fk_idprovincia = '".$this->fk_idprovincia."',
-                cod_postal =  '".$this->cod_postal."'
-                WHERE idlocalidad = " . $this->idlocalidad;
-          
-        if (!$mysqli->query($sql)) {
-            printf("Error en query: %s\n", $mysqli->error . " " . $sql);
-        }
-        $mysqli->close();
-    }
-
     public function obtenerPorProvincia($idProvincia){
         $aLocalidades = null;
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE);
